@@ -23,5 +23,7 @@ jobs:
     steps:
       - name: Pull image from docker hub
         run: docker pull mdshayemur01/e-commerce-backend-app:latest
+      - name: Delete Old Container
+        run: docker rm -f e-commerce-backend-container
       - name: Run Docker Container
         run: docker run -d -p 5000:5000 --name e-commerce-backend-container -e DB_URL='${{ secrets.DB_URL }}' -e TOKEN_SECRET='${{ secrets.TOKEN_SECRET }}' mdshayemur01/e-commerce-backend-app:latest
