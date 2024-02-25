@@ -9,6 +9,7 @@ export function checkAuth(
   next: NextFunction
 ) {
   const token = req.headers.authorization?.split(" ")[1];
+  console.log(token);
   if (!token) {
     next(ApiError.forbidden("Token is not found"));
     return;
@@ -18,5 +19,6 @@ export function checkAuth(
     process.env.TOKEN_SECRET as string
   ) as DecodedUser;
   req.decoded = decoded;
+  console.log(req.decoded);
   next();
 }

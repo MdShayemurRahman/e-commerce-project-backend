@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import UserRepo from "../models/UserModel";
-import RoleRepo from "../models/RoleModel";
-import { CreateUserInput, User, UserUpdate } from "../types/User";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import UserRepo from '../models/UserModel';
+import RoleRepo from '../models/RoleModel';
+import { CreateUserInput, User, UserUpdate } from '../types/User';
 
 async function findAll() {
   const users = await UserRepo.find().exec();
@@ -62,6 +62,7 @@ async function logIn(email: string, password: string) {
     return null;
   }
   const foundRole = await RoleRepo.findById({ _id: foundUser.roleId });
+  console.log('found:', foundRole?.permissions);
   if (!foundRole) {
     return null;
   }
@@ -72,7 +73,7 @@ async function logIn(email: string, password: string) {
   };
 
   const accessToken = jwt.sign(payload, process.env.TOKEN_SECRET as string, {
-    expiresIn: "1h",
+    expiresIn: '1h',
   });
 
   return accessToken;
@@ -86,7 +87,7 @@ async function googleLogin(user: User) {
       role: foundRole.name,
     };
     const accessToken = jwt.sign(payload, process.env.TOKEN_SECRET as string, {
-      expiresIn: "1h",
+      expiresIn: '1h',
     });
     return accessToken;
   }

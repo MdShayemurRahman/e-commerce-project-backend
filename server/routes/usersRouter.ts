@@ -14,7 +14,6 @@ const usersRouter = express.Router();
 
 usersRouter.get(
   "/",
-
   usersController.getAllUsers
 );
 usersRouter.get(
@@ -27,10 +26,10 @@ usersRouter.get(
 usersRouter.post(
   "/",
   validate(userSchema),
-  emailChecker,
-  checkAuth,
-  checkRoles(ROLE.ADMIN),
-  checkPermission("CREATE"),
+  emailChecker, // check unique email?
+  checkAuth, //loggedin?
+  checkRoles(ROLE.ADMIN), //admin?
+  checkPermission("CREATE"), // permission check..
   usersController.createUser
 );
 usersRouter.put(

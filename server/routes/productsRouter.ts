@@ -15,23 +15,23 @@ router.get("/:productId", controlWrapper(ctrl.getProduct));
 router.post(
   "/",
   validate(productSchema),
-  checkAuth,
-  checkRoles(ROLE.ADMIN),
-  checkPermission("CREATE"),
+  // checkAuth,
+  // checkRoles(ROLE.ADMIN),
+  // checkPermission("CREATE"),
   controlWrapper(ctrl.addProduct)
 );
 router.delete(
   "/:productId",
-  checkAuth,
-  checkRoles(ROLE.ADMIN),
-  checkPermission("DELETE"),
+  // checkAuth,
+  // checkRoles(ROLE.ADMIN),
+  // checkPermission("DELETE"),
   controlWrapper(ctrl.deleteProduct)
 );
 router.put(
   "/:productId",
-  checkAuth,
-  checkRoles(ROLE.ADMIN),
-  checkPermission("UPDATE"),
+  // checkAuth, //user logged in 
+  // checkRoles(ROLE.ADMIN),
+  // checkPermission("UPDATE"),
   validate(uptadeProductSchema),
   controlWrapper(ctrl.updateProduct)
 );

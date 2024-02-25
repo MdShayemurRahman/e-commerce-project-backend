@@ -1,0 +1,29 @@
+name: deploy node application
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: action/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: docker build -t mdshayemur01/e-commerce-backend-app .
+      - name: Publish Image to docker hub
+        run: docker push mdshayemur01/e-commerce-backend-app:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull mdshayemur01/e-commerce-backend-app:latest
+      - name: Run Docker Container
+        run: docker run -d -p 5000:5000 --name e-commerce-backend-container -e DB_URL='${{ secrets.DB_URL }}' -e -e TOKEN_SECRET='${{ secrets.TOKEN_SECRET }}' mdshayemur01/e-commerce-backend-app:latest
+
+

@@ -7,6 +7,7 @@ export function checkRoles(...roles: Role[]) {
   return (req: WithAuthRequest, res: Response, next: NextFunction) => {
     const user = req.decoded;
     const hasMatchedRole = user && roles.includes(user.role);
+    console.log(hasMatchedRole);
     if (!hasMatchedRole) {
       next(ApiError.forbidden("You do not have access"));
       return;

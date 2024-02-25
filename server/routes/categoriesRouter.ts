@@ -15,9 +15,9 @@ categoriesRouter.get("/:categoryId", controller.getSingleCategory);
 categoriesRouter.post(
   "/",
   validate(categorySchema),
-  checkAuth,
-  checkRoles(ROLE.ADMIN),
-  checkPermission("CREATE"),
+  // checkAuth,
+  // checkRoles(ROLE.ADMIN),
+  // checkPermission("CREATE"), 
   controller.createCategory
 );
 categoriesRouter.put(
